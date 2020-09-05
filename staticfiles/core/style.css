@@ -1,0 +1,71 @@
+@import url('https://fonts.googleapis.com/css2?family=Concert+One&family=Space+Mono&display=swap');
+
+* {
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.main {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
+}
+
+.main h1 {
+    padding-top: 7.5%;
+    margin-bottom: 15px;
+    font-family: 'Concert One', cursive;
+    font-size: 40px;
+}
+
+.main form {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
+}
+
+.main form input{
+    font-family: 'Space Mono', monospace;
+    margin-bottom: 15px;
+    margin-right: 40%;
+    margin-left: 40%;
+    border-radius: 30px 30px 30px 30px;
+    border-width: 2px 2px 2px 2px;
+    padding: 10px;
+    border-color: #000000;
+}
+
+.main form input[type="submit"]{
+    background-color: #000000;
+    color: #ffffff;
+}
+
+.results {
+    margin-top: 15px;
+    font-family: 'Space Mono', monospace;
+}
+
+.results .region {
+    font-family: 'Concert One', cursive;
+    font-size: 25px;
+    padding-bottom: 10px;
+}
+
+.results .time, .results .attire {
+    padding-bottom: 10px;
+}
+
+.results .maybe-bring {
+    padding-bottom: 10px;
+}
+
+.results .status {
+    padding-top: 5px;
+    font-size: 20px;
+}
+
+.results .current-temp {
+    font-size: 3rem;
+}
