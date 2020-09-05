@@ -59,7 +59,7 @@ def home(request):
         sunrise_soup = BeautifulSoup(html_content[2], 'html.parser')
         extracted_data = dict()
         extracted_data['region'] = weather_soup.find("div", attrs={"id": "wob_loc"}).text
-        extracted_data['current_temp'] = int(weather_soup.find("span", attrs={"id": "wob_tm"}).text)
+        extracted_data['current_temp'] = int(weather_soup.find("span", attrs={"id": "wob_tm", "class": "wob_t TVt0me"}).text)
         extracted_data['time'] = weather_soup.find("div", attrs={"id": "wob_dts"}).text
         extracted_data['status'] = weather_soup.find("span", attrs={"id": "wob_dc"}).text
 
