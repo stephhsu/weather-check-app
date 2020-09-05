@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <title>WeatherCheck</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'core/style.css' %}">
+</head>
+<body>
+    <div class="main">
+        <h1>check the weather!</h1>
+        <form method="GET">
+            <label for="city"></label>
+            <input type="text" name="city" id="city" placeholder="search by city ..." />
+            <input type="submit" value="submit" />
+        </form>
+        <div class="results">
+            {% if extracted_data %}
+                <p class="region"> {{ extracted_data.region }} </p>
+                <p class="time"> {{ extracted_data.time }} </p>
+                <p class="current-temp"> {{ extracted_data.current_temp }}ºC</p>
+
+                {% if extracted_data.current_temp >= 20 %}
+                    <p class="attire">Seems like t-shirt and shorts weather!</p>
+                {% elif extracted_data.current_temp <= 19 and extracted_data.current_temp >= 11 %}
+                    <p class="attire">Might be good to bring a sweater or a thin jacket!</p>
+                {% elif extracted_data.current_temp <= 10 and extracted_data.current_temp >= 0 %}
+                    <p class="attire">You should probably wear a sweater and a thicker jacket!</p>
+                {% elif extracted_data.current_temp < 0%}
+                    <p class="attire">Bundle up in a heavy jacket! It's looking cold out there. </p>
+                {% endif %}
+
+                {% if extracted_data.time_status == "day" %}
+                    {% if extracted_data.status == "Sunny" or extracted_data.status == "Clear" %}
+                        <p class="maybe-bring">Some sunny g's might be nice 8)</p>
+                        <img src="{% static 'core/imgs/sun.JPG' %}" alt="sunny" width="10%" height="10%"/>
+                    {% elif extracted_data.status == "Mostly sunny" or extracted_data.status == "Partly cloudy" or extracted_data.status == "Clear with periodic clouds" %}
+                        <img src="{% static 'core/imgs/cloudy_sun.JPG' %}" alt="partly cloudy" width="10%" height="10%"/>
+                    {% elif extracted_data.status == "Cloudy" or extracted_data.status == "Mostly cloudy" %}
+                        <img src="{% static 'core/imgs/cloudy.JPG' %}" alt="cloudy" width="10%" height="10%"/>
+                    {% elif extracted_data.status == "Scattered thunderstorms" or extracted_data.status == "Isolated thunderstorms" %}
+                        <p class="maybe-bring">Better to stay indoors but bring an umbrella if you go outside!</p>
+                        <img src="{% static 'core/imgs/stormy.JPG' %}" alt="thunderstorm" width="10%" height="10%"/>
+                    {% elif extracted_data.status == "Showers" or extracted_data.status == "Chance of showers" or extracted_data.status == "Light rain showers" or extracted_data.status == "Light rain" or extracted_data.status == "Light thunderstorms and rain" %}
+                        <p class="maybe-bring">You might want to bring an umbrella today!</p>
+                        <img src="{% static 'core/imgs/mist.JPG' %}" alt="showers" width="10%" height="10%"/>
+                    {% elif extracted_data.status == "Rain" or extracted_data.status == "Wind and rain" %}
+                        <p class="maybe-bring">You should bring an umbrella today!</p>
+                        <img src="{% static 'core/imgs/rain.JPG' %}" alt="rain" width="10%" height="10%"/>
+                    {% elif extracted_data.status == "Light snow" or extracted_data.status == "Snow showers" %}
+                        <img src="{% static 'core/imgs/snowy.JPG' %}" alt="snowy" width="10%" height="10%"/>
+                    {% endif %}
+                {% endif %}
+
+                {% if extracted_data.time_status == "night" %}
+                    {% if extracted_data.status == "Clear" %}
+                        <img src="{% static 'core/imgs/moon.JPG' %}" alt="clear" width="10%" height="10%"/>
+                    {% elif extracted_data.status == "Partly cloudy" or extracted_data.status == "Clear with periodic clouds" %}
+                        <img src="{% static 'core/imgs/cloudy_moon.JPG' %}" alt="partly cloudy" width="10%" height="10%"/>
+                    {% elif extracted_data.status == "Cloudy" or extracted_data.status == "Mostly cloudy" %}
+                        <img src="{% static 'core/imgs/cloudy.JPG' %}" alt="cloudy" width="10%" height="10%"/>
+                    {% elif extracted_data.status == "Scattered thunderstorms" or extracted_data.status == "Isolated thunderstorms" %}
+                        <p class="maybe-bring">Better to stay indoors but bring an umbrella if you go outside!</p>
+                        <img src="{% static 'core/imgs/stormy.JPG' %}" alt="thunderstorm" width="10%" height="10%"/>
+                    {% elif extracted_data.status == "Showers" or extracted_data.status == "Chance of showers" or extracted_data.status == "Light rain showers" or extracted_data.status == "Light rain" or extracted_data.status == "Light thunderstorms and rain" %}
+                        <p class="maybe-bring">You might want to bring an umbrella today!</p>
+                        <img src="{% static 'core/imgs/mist.JPG' %}" alt="showers" width="10%" height="10%"/>
+                    {% elif extracted_data.status == "Rain" or extracted_data.status == "Wind and rain" %}
+                        <p class="maybe-bring">You should bring an umbrella today!</p>
+                        <img src="{% static 'core/imgs/rain.JPG' %}" alt="rain" width="10%" height="10%"/>
+                    {% elif extracted_data.status == "Light snow" or extracted_data.status == "Snow showers" %}
+                        <img src="{% static 'core/imgs/snowy.JPG' %}" alt="snowy" width="10%" height="10%"/>
+                    {% endif %}
+                {% endif %}
+
+                <p class="status"> {{ extracted_data.status }} </p>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>
