@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from bs4 import BeautifulSoup
 import requests
+import pdb
 
 # Create your views here.
 
@@ -15,7 +16,8 @@ def get_html_content(request):
     session.headers['User-Agent'] = USER_AGENT
     session.headers['Accept-Language'] = LANGUAGE
     session.headers['Content-Language'] = LANGUAGE
-    html_content_weather = session.get(f'https://www.google.com/search?q=weather+{city}').text
+
+    html_content_weather = session.get(f'https://www.google.com/search?q=weather+{city}').content
     html_content_sunset_time = session.get(f'https://www.google.com/search?q=sunset+{city}').text
     html_content_sunrise_time = session.get(f'https://www.google.com/search?q=sunrise+{city}').text
     return html_content_weather, html_content_sunset_time, html_content_sunrise_time
@@ -58,10 +60,13 @@ def home(request):
         sunset_soup = BeautifulSoup(html_content[1], 'html.parser')
         sunrise_soup = BeautifulSoup(html_content[2], 'html.parser')
         extracted_data = dict()
-        extracted_data['region'] = weather_soup.find("div", attrs={"id": "wob_loc"}).text
-        extracted_data['current_temp'] = int(weather_soup.find("span", attrs={"id": "wob_ttm", "class": "wob_t"}).text)
-        extracted_data['time'] = weather_soup.find("div", attrs={"id": "wob_dts"}).text
-        extracted_data['status'] = weather_soup.find("span", attrs={"id": "wob_dc"}).text
+        extracted_data['region'] = weather_soup.find('span', attrs={'class': 'BNeawe tAd8D AP7Wnd'}).text
+        current_temp_str = weather_soup.find('div', attrs={'class': 'BNeawe iBp4i AP7Wnd'}).text
+        extracted_data['current_temp'] = int(current_temp_str[:-2])
+        time_status_str = weather_soup.find('div', attrs={'class': 'BNeawe tAd8D AP7Wnd'}).text
+        time_status_list = time_status_str.splitlines()
+        extracted_data['time'] = time_status_list[0].strip()
+        extracted_data['status'] = time_status_list[1]
 
         sunset_time = sunset_soup.find("div", attrs={"class": "MUxGbd t51gnb lyLwlc lEBKkf"})
         if sunset_time == None:  # if the class isn't found, use default sunset time of 6:00 am
