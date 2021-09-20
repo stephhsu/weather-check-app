@@ -62,7 +62,7 @@ def home(request):
         extracted_data = dict()
         extracted_data['region'] = weather_soup.find('span', attrs={'class': 'BNeawe tAd8D AP7Wnd'}).text
         current_temp_str = weather_soup.find('div', attrs={'class': 'BNeawe iBp4i AP7Wnd'}).text
-        extracted_data['current_temp'] = int(current_temp_str[:-2])
+        extracted_data['current_temp'] = farenheit_to_celcius(int(current_temp_str[:-2]))
         time_status_str = weather_soup.find('div', attrs={'class': 'BNeawe tAd8D AP7Wnd'}).text
         time_status_list = time_status_str.splitlines()
         extracted_data['time'] = time_status_list[0].strip()
@@ -84,3 +84,6 @@ def home(request):
         pass
 
     return render(request, 'core/home.html', {'extracted_data': extracted_data})
+
+def farenheit_to_celcius(farenheit):
+    return (farenheit − 32) × 5/9
