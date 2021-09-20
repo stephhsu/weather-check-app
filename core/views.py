@@ -86,4 +86,4 @@ def home(request):
     return render(request, 'core/home.html', {'extracted_data': extracted_data})
 
 def farenheit_to_celcius(farenheit):
-    return (farenheit − 32) * 5/9
+    return int((farenheit - 32) * 5/9)
