@@ -64,6 +64,7 @@
 .results .status {
     padding-top: 5px;
     font-size: 20px;
+    padding-bottom: 15%;
 }
 
 .results .current-temp {
